@@ -33,7 +33,9 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx",
+    // Highchartsの型定義ファイルが含まれているディレクトリやファイルパス
+    "node_modules/highcharts"
   ],
   "exclude": [
     "node_modules"

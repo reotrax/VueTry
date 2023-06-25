@@ -2117,6 +2117,11 @@
   optionalDependencies:
     prettier "^1.18.2 || ^2.0.0"
 
+"@vue/composition-api@^1.0.0-beta.5":
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/@vue/composition-api/-/composition-api-1.7.1.tgz#aa6831be5a12817d93e89e247460c310dd7a3a32"
+  integrity sha512-xDWoEtxGXhH9Ku3ROYX/rzhcpt4v31hpPU5zF3UeVC/qxA3dChmqU8zvTUYoKh3j7rzpNsoFOwqsWG7XPMlaFA==
+
 "@vue/eslint-config-typescript@^9.1.0":
   version "9.1.0"
   resolved "https://registry.yarnpkg.com/@vue/eslint-config-typescript/-/eslint-config-typescript-9.1.0.tgz#b98a64352b312085444a08b98728962e2a8425ab"
@@ -4417,6 +4422,16 @@ he@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
+
+highcharts-vue@^1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/highcharts-vue/-/highcharts-vue-1.4.2.tgz#6d8568095102fc1cd3286fc488e2d4a31951ebdb"
+  integrity sha512-B84d2Me0w1G7euPC3WNxhpq2/+t1nxLGa9sa0LUzYNXrWw7Es0n2aXst7ZGb/m3vI7VjFKstDitS8fEFuDNwWg==
+
+highcharts@^11.1.0:
+  version "11.1.0"
+  resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-11.1.0.tgz#715eb55fd081351b526e28cd89ac0e4e30b35c15"
+  integrity sha512-vhmqq6/frteWMx0GKYWwEFL25g4OYc7+m+9KQJb/notXbNtIb8KVy+ijOF7XAFqF165cq0pdLIePAmyFY5ph3g==
 
 highlight.js@^10.7.1:
   version "10.7.3"
@@ -7926,6 +7941,11 @@ void-elements@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-3.1.0.tgz#614f7fbf8d801f0bb5f0661f5b2f5785750e4f09"
   integrity sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==
+
+vue-composition-api@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/vue-composition-api/-/vue-composition-api-0.0.1.tgz#e4d330ca6c620cfbe58484e869b556dc51b08e10"
+  integrity sha512-NVfEyDSx+JVnLCi2W0lWGub+3XStijUoSLePD+z7CCIN6NxMjcDmt6PzLJ4KfSxAQJ8YwRZoGwSXJp33oSHVAg==
 
 vue-eslint-parser@^8.0.0, vue-eslint-parser@^8.0.1:
   version "8.3.0"
