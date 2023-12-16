@@ -1,6 +1,8 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import Btn1 from "../views/Btn1.vue";
+import Btn2 from "../views/Btn2.vue";
 
 Vue.use(VueRouter);
 
@@ -9,6 +11,18 @@ const routes: Array<RouteConfig> = [
     path: "/",
     name: "home",
     component: HomeView,
+    children: [
+      {
+        path: "/btn1",
+        name: "btn1",
+        component: Btn1,
+      },
+      {
+        path: "/btn2",
+        name: "btn2",
+        component: Btn2,
+      },
+    ],
   },
   {
     path: "/about",

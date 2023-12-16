@@ -1,11 +1,11 @@
 <template lang="pug">
-.hello
-  Chart(:options="testOpt")
+.high-charts
+  Chart(:options="options")
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "@vue/composition-api";
-// import { Options } from "highcharts";
+import { computed, defineComponent } from "@vue/composition-api";
+import { Options } from "highcharts";
 import { Chart } from "highcharts-vue";
 
 export default defineComponent({
@@ -16,10 +16,8 @@ export default defineComponent({
   },
 
   setup() {
-    const title = ref("title");
-
     /** options */
-    const testOpt = computed(() => {
+    const options = computed<Options>(() => {
       return {
         chart: {
           type: "column",
@@ -103,8 +101,7 @@ export default defineComponent({
     });
 
     return {
-      title,
-      testOpt,
+      options,
     };
   },
 });
