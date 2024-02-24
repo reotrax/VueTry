@@ -3,6 +3,8 @@ import VueRouter, { RouteConfig } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import Btn1 from "../views/Btn1.vue";
 import Btn2 from "../views/Btn2.vue";
+import HighCharts from "@/components/HighCharts.vue"; // @ is an alias to /src
+import ValueEditor from "@/components/ValueEditor.vue"; // @ is an alias to /src
 
 Vue.use(VueRouter);
 
@@ -11,6 +13,7 @@ const routes: Array<RouteConfig> = [
     path: "/",
     name: "home",
     component: HomeView,
+    redirect: "highcharts",
     children: [
       {
         path: "/btn1",
@@ -21,6 +24,16 @@ const routes: Array<RouteConfig> = [
         path: "/btn2",
         name: "btn2",
         component: Btn2,
+      },
+      {
+        path: "/highcharts",
+        name: "highcharts",
+        component: HighCharts,
+      },
+      {
+        path: "/value_editor",
+        name: "value_editor",
+        component: ValueEditor,
       },
     ],
   },
