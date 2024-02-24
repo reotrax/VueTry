@@ -4,7 +4,9 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </nav>
-    <router-view />
+    <div class="main">
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -15,6 +17,8 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  display: flex;
+  flex-direction: column;
 }
 
 nav {
@@ -28,5 +32,10 @@ nav {
       color: #42b983;
     }
   }
+}
+
+.main {
+  flex: 1;
+  width: 100%;
 }
 </style>

@@ -1,29 +1,53 @@
-<template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <div>
-      <button @click="onClickView(1)">btn1</button>
-      <button @click="onClickView(2)">btn2</button>
-    </div>
-    <router-view></router-view>
-    <HighCharts msg="Welcome to Your Vue.js + TypeScript App" />
-  </div>
+<template lang="pug">
+.home
+  .home-btns
+    <button @click="onClickView(1)">btn1</button>
+    <button @click="onClickView(2)">btn2</button>
+    <button @click="onClickRouteHighcharts(2)">Highcharts</button>
+    <button @click="onClickRouteValueEditor">ValueEditor</button>
+  .home-img(v-if="currentRoute.name !== 'highcharts'")
+    img(
+      v-if="showLogo"
+      alt="Vue logo"
+      src="../assets/logo.png"
+    )
+  .home-main
+    router-view
 </template>
 
 <script lang="ts">
-import { defineComponent, setupContext } from "@vue/composition-api";
-import HighCharts from "@/components/HighCharts.vue"; // @ is an alias to /src
+// import Vue from "vue";
+import { defineComponent, computed } from "@vue/composition-api";
+import { Route, NavigationGuardNext } from "vue-router";
+
+import { useRouter } from "@/composables/use_router";
 
 export default defineComponent({
   name: "HomeView",
-  components: {
-    HighCharts,
-  },
 
-  setup(_: unknown, ctx: setupContext) {
-    const {
-      root: { $route, $router },
-    } = ctx;
+  // beforeRouteEnter(to: Route, from: Route, next: NavigationGuardNext) {
+  //   console.log("enter");
+  //   next();
+  // },
+  beforeRouteUpdate(to: Route, from: Route, next: NavigationGuardNext) {
+    console.log("update", to, from);
+    if (to.name === from.name) {
+      next(false);
+      return;
+    }
+    next();
+  },
+  // beforeRouteLeave(to: Route, from: Route, next: NavigationGuardNext) {
+  //   console.log("leave");
+  //   next();
+  // },
+
+  setup(/*_props: unknown, _ctx: SetupContext*/) {
+    const { currentRoute, router } = useRouter();
+
+    const showLogo = computed(() => {
+      return currentRoute.value?.name !== "highcharts";
+    });
 
     /**
      * click event handler.
@@ -31,15 +55,48 @@ export default defineComponent({
      */
     function onClickView(number: number) {
       const routeName = `btn${number}`;
-      console.log(routeName, $route.name);
-      if ($route && $router && $route.name !== routeName) {
-        $router.push({ name: routeName });
-      }
+      if (routeName === currentRoute.value?.name) return;
+      router?.push({ name: routeName });
+    }
+
+    function onClickRouteHighcharts() {
+      if (currentRoute.value?.name === "highcharts") return;
+      router?.push({ name: "highcharts" });
+    }
+
+    function onClickRouteValueEditor() {
+      if (currentRoute.value?.name === "value_editor") return;
+      router?.push({ name: "value_editor" });
     }
 
     return {
+      currentRoute,
+      showLogo,
+
       onClickView,
+      onClickRouteHighcharts,
+      onClickRouteValueEditor,
     };
   },
 });
 </script>
+
+<style lang="scss">
+.home {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.home-img {
+  height: 150px;
+  img {
+    height: 100%;
+  }
+}
+
+.home-main {
+  flex: 1;
+}
+</style>
