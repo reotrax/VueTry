@@ -2,6 +2,9 @@
 .high-charts
   .high-charts-header
     .btn-wrap
+      button(@click="chartType = chartType === 'column' ? 'stack' : 'column'")
+        | {{ chartType }}
+    .btn-wrap
       button(@click="onClickBtnReload")
         | reload
     .input-wrap
@@ -20,6 +23,12 @@
       ref="chartRef"
       :options="options"
     )
+  //- .high-charts-main
+    Chart(
+      v-if="options"
+      ref="chartRef"
+      :options="options"
+    )
 </template>
 
 <script lang="ts">
@@ -31,6 +40,7 @@ import {
   watch,
 } from "@vue/composition-api";
 // import * as Highcharts from "highcharts";
+// import Highcharts from "highcharts";
 import { Chart } from "highcharts-vue";
 
 type XAxisBackBoardData = {
@@ -59,6 +69,8 @@ export default defineComponent({
     const chartRef = ref<InstanceType<typeof Chart>>();
 
     const chartMain = computed(() => chartRef.value?.chart);
+
+    const chartType = ref<"column" | "stack">("stack");
 
     const series = ref([
       {
@@ -128,13 +140,31 @@ export default defineComponent({
 
       return {
         chart: {
+          animation: false,
           type: "column",
+          scrollablePlotArea: {
+            minWidth: 3000, // 横スクロールを有効にするために大きな横幅を設定
+            scrollPositionX: 1,
+          },
           events: {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             load(e: any) {
               // console.log("load");
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               onLoadEvents(e, this as any);
+
+              //
+              // const chart = this;
+              // 横スクロール可能にする
+              // const container = containerRef.value;
+              // container.style.overflowX = 'auto';
+              // container.style.whiteSpace = 'nowrap';
+              // スクロールイベントを監視
+              // container.addEventListener('scroll', () => {
+              //   updateLabels(chart);
+              // });
+              // 初期ラベルの更新
+              // updateLabels(chart);
             },
             // render(e: any) {
             //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -155,21 +185,27 @@ export default defineComponent({
           text: "Source: WorldClimate.com",
         },
         xAxis: {
-          categories: [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
-          ],
+          // categories: [
+          //   "Jan",
+          //   "Feb",
+          //   "Mar",
+          //   "Apr",
+          //   "May",
+          //   "Jun",
+          //   "Jul",
+          //   "Aug",
+          //   "Sep",
+          //   "Oct",
+          //   "Nov",
+          //   "Dec",
+          // ],
           crosshair: true,
+          // type: "linear",
+          // min: 0,
+          // max: 5, // 初期表示範囲を設定（必要に応じて調整）
+          scrollbar: {
+            enabled: true,
+          },
         },
         yAxis: {
           tickPixelInterval:
@@ -187,6 +223,16 @@ export default defineComponent({
           title: {
             text: "Rainfall (mm)",
           },
+          stackLabels: {
+            enabled: true,
+            style: {
+              fontWeight: "bold",
+              // color: ( // theme
+              //   Highcharts.defaultOptions.title.style &&
+              //   Highcharts.defaultOptions.title.style.color
+              //   "gray",
+            },
+          },
         },
         tooltip: {
           headerFormat:
@@ -200,11 +246,22 @@ export default defineComponent({
         },
         plotOptions: {
           column: {
-            pointPadding: 0.2,
+            dataLabels: {
+              enabled: true,
+            },
             borderWidth: 0,
+            groupPadding: 0.2, // グループ間の余白を調整
+            pointPadding: 0.2, // 棒同士の余白を設定
+            pointWidth: 20, // 棒の幅を指定
+            stacking: chartType.value === "column" ? "" : "normal",
+          },
+          animation: false,
+          series: {
+            animation: false,
           },
         },
-        series: seriesLinkedTo.value.concat(series.value),
+        series: generateHeavyData(chartType.value, 20, 100),
+        // series: seriesLinkedTo.value.concat(series.value),
       };
     });
 
@@ -334,6 +391,7 @@ export default defineComponent({
     return {
       chartRef,
       chartMain,
+      chartType,
       tickPixelInterval,
       tickPositions,
       tickInterval,
@@ -346,6 +404,49 @@ export default defineComponent({
     };
   },
 });
+
+/**
+ * Highchartsのデータを生成
+ * @param numSeries 凡例数
+ * @param numPoints データポイント数
+ */
+function generateHeavyData(
+  type: "column" | "stack",
+  numSeries: number,
+  numPoints: number
+) {
+  const data = [];
+  switch (type) {
+    case "column":
+      for (let i = 0; i < numSeries; i++) {
+        const seriesData = [];
+        for (let j = 0; j < numPoints; j++) {
+          seriesData.push({
+            // x: j,
+            y: Math.random() * 100,
+          });
+        }
+        data.push({
+          // name: `Series ${i + 1}`,
+          data: seriesData,
+        });
+      }
+      break;
+    case "stack":
+      for (let i = 0; i < numSeries; i++) {
+        const seriesData = [];
+        for (let j = 0; j < numPoints; j++) {
+          seriesData.push(Math.random() * 100);
+        }
+        data.push({
+          name: `Series ${i + 1}`,
+          data: seriesData,
+        });
+      }
+      break;
+  }
+  return data;
+}
 </script>
 
 <style lang="scss">
