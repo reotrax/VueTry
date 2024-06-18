@@ -5,7 +5,8 @@
     <button @click="onClickView(2)">btn2</button>
     <button @click="onClickRouteHighcharts(2)">Highcharts</button>
     <button @click="onClickRouteValueEditor">ValueEditor</button>
-  .home-img(v-if="currentRoute.name !== 'highcharts'")
+    <button @click="onClickRouteFrontTest">FrontTest</button>
+  //- .home-img(v-if="currentRoute.name !== 'highcharts'")
     img(
       v-if="showLogo"
       alt="Vue logo"
@@ -69,6 +70,11 @@ export default defineComponent({
       router?.push({ name: "value_editor" });
     }
 
+    function onClickRouteFrontTest() {
+      if (currentRoute.value?.name === "front_test") return;
+      router?.push({ name: "front_test" });
+    }
+
     return {
       currentRoute,
       showLogo,
@@ -76,6 +82,7 @@ export default defineComponent({
       onClickView,
       onClickRouteHighcharts,
       onClickRouteValueEditor,
+      onClickRouteFrontTest,
     };
   },
 });
