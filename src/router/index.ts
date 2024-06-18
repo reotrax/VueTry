@@ -5,6 +5,7 @@ import Btn1 from "../views/Btn1.vue";
 import Btn2 from "../views/Btn2.vue";
 import HighCharts from "@/components/HighCharts.vue"; // @ is an alias to /src
 import ValueEditor from "@/components/ValueEditor.vue"; // @ is an alias to /src
+import FrontTest from "@/components/FrontTest.vue";
 
 Vue.use(VueRouter);
 
@@ -34,6 +35,11 @@ const routes: Array<RouteConfig> = [
         path: "/value_editor",
         name: "value_editor",
         component: ValueEditor,
+      },
+      {
+        path: "/front_test",
+        name: "front_test",
+        component: FrontTest,
       },
     ],
   },
