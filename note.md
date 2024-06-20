@@ -9,6 +9,8 @@ provide/inject
 Vuex
 VueRouter
 Vueコンポーネントの作成/使用
+Drag&Drop（VueDraggle使用）
+グラフ（Highcharts使用）
 
 Lv.2
 mouseイベント
@@ -43,8 +45,6 @@ Lv.1
 
 Lv.3
 vanillaのJSでDOM生成
-Drag&Drop（VueDraggle使用）
-グラフ（Highcharts使用）
 flat/flatMap
 リファクタリング
 optional
@@ -54,6 +54,7 @@ Lv.2
 mouseイベント
 イベント伝播
 設計
+JSDoc
 
 Lv.1
 型（String/Numberなど）
@@ -71,19 +72,20 @@ SCSS変数
 position sticky
 
 Lv.2
-・pug
-CSS設計
+CSS設計（Lv2）
 SCSS記法の基本
 影響範囲の意識
 モディファイアの使用
 CSS変数
+position（relative/absolute）
 z-index
 
 Lv.1
+・pug
 ・命名規則
 ・form要素の使用（button/inputなど）
 ・テキストの位置調整
+CSS設計（Lv1）
 margin/padding
-position（relative/absolute）
 マウスオーバー（hover）
 疑似要素（before/after）
