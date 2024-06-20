@@ -85,7 +85,7 @@ Lv.1
 ・命名規則
 ・form要素の使用（button/inputなど）
 ・テキストの位置調整
-CSS設計（Lv1）
+・CSS設計（Lv1）
 margin/padding
-マウスオーバー（hover）
-疑似要素（before/after）
+・マウスオーバー（hover）
+・疑似要素（before/after）
