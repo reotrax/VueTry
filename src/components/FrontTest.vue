@@ -1,68 +1,33 @@
 <template lang="pug">
 .un-helloWorld
   .un-helloWorld-main
-    //- LEVEL:可
-    //- JavaScript（Vue.jsより難しいのでは）
-    .test-javascript
-      h2 JavaScript
-      #card-list.bl-cardList
-        .bl-cardItem(v-for="item of 4")
-          //- 設計にheaderの概念があるか
-          .bl-cardItem-header
-            .bl-cardItem-header-label
-              | テキストテキストテキスト
-            //- form要素を適切に使えるか
-            button.bl-cardItem-header-btn
-              | btn
-          .bl-cardItem-body
+    button(@click="selectedTestLevel = 3") 優
+    button(@click="selectedTestLevel = 2") 良
+    button(@click="selectedTestLevel = 1") 可
 
-    //- LEVEL:良
-    //- Vue.js
-    .test-vue
-      h2 Vue.js
-      .bl-versatile-area
-        input()
-      .bl-cardList(@scroll="onScrollList")
-        .bl-cardItem(
-          v-for="(item, index) of cardList"
-          :key="index"
-          :class="item.isSelected ? 'is-selected' : ''"
-          @click="onClickCard(item)"
-        )
-          .bl-cardItem-header
-            //- mouseイベントが使えるか
-            .bl-cardItem-header-label(
-              @mouseenter="onMouseEnter(item)"
-              @mouseleave="onMouseLeave(item)"
-            )
-              | {{ item.title }}
-            .bl-popover(v-if="item.isShowPopover")
-              | {{ item.title }}
-            //- 修飾子を使って伝播を止められるか
-            //- form要素を適切に使えるか
-            button.bl-cardItem-header-btn(
-              @click.stop="onClickButton(item)"
-            )
-              | hold
-          .bl-cardItem-body
-            | {{ item.text }}
-
-    //- LEVEL:優
-    .test-level-3
+    component(
+      :is="selectedTestComponent"
+      :cardList="cardList"
+    )
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "@vue/composition-api";
-
-interface CardInfo {
-  title: string;
-  text: string;
-  isSelected: boolean;
-  isShowPopover: boolean;
-}
+import { defineComponent, ref, computed } from "@vue/composition-api";
+import FontCard, { CardItem } from "@/components/common/FrontCard.vue";
+import TestLevel3 from "@/components/common/TestLevel3.vue";
+import TestLevel2 from "@/components/common/TestLevel2.vue";
+import TestLevel1 from "@/components/common/TestLevel1.vue";
 
 export default defineComponent({
   name: "HelloWorld",
+
+  components: {
+    FontCard,
+    TestLevel3,
+    TestLevel2,
+    TestLevel1,
+  },
+
   props: {
     msg: String,
   },
@@ -71,27 +36,31 @@ export default defineComponent({
     // Lv.2 - 型を定義できるか
     // Lv.1 - 静的化動的かを認識し、定数/変数を使い分けられる、配列を理解できる
     /** カード情報 */
-    const CARD_INFO: CardInfo[] = [
+    const CARD_INFO: CardItem[] = [
       // この情報は用意してあげる？
       {
+        id: "0",
         title: "テキスト",
         text: "説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文",
         isSelected: false,
         isShowPopover: false,
       },
       {
+        id: "1",
         title: "長いテキスト長いテキスト長いテキスト",
         text: "説明文説明文説明文説明文説明文説明文説明文説明文説明文",
         isSelected: false,
         isShowPopover: false,
       },
       {
+        id: "2",
         title: "長いテキスト長いテキスト長いテキスト",
         text: "説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文",
         isSelected: false,
         isShowPopover: false,
       },
       {
+        id: "3",
         title: "長いテキスト長いテキスト長いテキスト",
         text: "説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文説明文",
         isSelected: false,
@@ -141,47 +110,27 @@ export default defineComponent({
       const cardElement = document.createElement("div");
     }
 
+    /** コンポーネント名 */
+    const TEST_NAME: { [key: number]: string } = {
+      1: "TestLevel1",
+      2: "TestLevel2",
+      3: "TestLevel3",
+    };
+
+    /** 選択コンポーネント番号 */
+    const selectedTestLevel = ref(3);
+
+    const selectedTestComponent = computed(
+      () => TEST_NAME[selectedTestLevel.value]
+    );
+
     /** カード一覧 */
-    const cardList = ref<CardInfo[]>(CARD_INFO);
-
-    // JSDocが書けているか
-    /**
-     * ボタンのクリックイベント
-     */
-    function onClickButton(): void {
-      //
-    }
-
-    // 型定義が適切か
-    /**
-     * カードのクリックイベント
-     * @param item カード情報
-     */
-    function onClickCard(item: CardInfo): void {
-      item.isSelected = !item.isSelected;
-    }
-
-    function onScrollList(event: Event) {
-      const el = event.target;
-      const rect = (el as HTMLElement)?.getBoundingClientRect();
-      console.log(rect);
-    }
-
-    function onMouseEnter(item: CardInfo) {
-      item.isShowPopover = true;
-    }
-
-    function onMouseLeave(item: CardInfo) {
-      item.isShowPopover = false;
-    }
+    const cardList = ref<CardItem[]>(CARD_INFO);
 
     return {
+      selectedTestLevel,
+      selectedTestComponent,
       cardList,
-      onClickButton,
-      onClickCard,
-      onScrollList,
-      onMouseEnter,
-      onMouseLeave,
     };
   },
 });
@@ -194,15 +143,21 @@ $card-height: 160px;
 $card-margin: 20px;
 $font-size: 14px;
 
-.un-helloWorld {
-  * {
-    box-sizing: border-box;
-  }
-}
-
 //- 複数の単語で命名されているか
 .un-helloWorld-main {
   overflow: hidden scroll;
+}
+</style>
+
+<style lang="scss">
+// SASS変数を適切に使用しているか
+$card-width: 200px;
+$card-height: 160px;
+$card-margin: 20px;
+$font-size: 14px;
+
+* {
+  box-sizing: border-box;
 }
 
 //- ルール通りの命名規則になっているか（ケバブケース）
@@ -226,7 +181,12 @@ $font-size: 14px;
   overflow: hidden scroll;
 }
 
-.bl-cardItem {
+// importantを使いこなせるか
+.help {
+  padding: 0 !important;
+}
+
+.bl-frontCard {
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -237,14 +197,14 @@ $font-size: 14px;
   background: white;
   &.is-selected {
     border-color: red;
-    .bl-cardItem-header,
-    .bl-cardItem-body {
+    .bl-frontCard-header,
+    .bl-frontCard-body {
       background-color: #ffcdcd;
     }
   }
 }
 
-.bl-cardItem-header {
+.bl-frontCard-header {
   position: relative;
   display: flex;
   justify-content: center;
@@ -254,7 +214,7 @@ $font-size: 14px;
   border-radius: 8px 8px 0 0;
 }
 
-.bl-cardItem-body {
+.bl-frontCard-body {
   text-align: left;
   padding: 10px;
   flex: 1;
@@ -262,7 +222,7 @@ $font-size: 14px;
 }
 
 //- 文字数が多くてもずれないか
-.bl-cardItem-header-label {
+.bl-frontCard-header-label {
   position: relative;
   font-size: $font-size;
   max-width: 90px;
@@ -270,7 +230,7 @@ $font-size: 14px;
   overflow: hidden;
 }
 
-.bl-popover {
+.bl-tooltip {
   position: absolute;
   top: 6px;
   left: 50%;
@@ -285,7 +245,7 @@ $font-size: 14px;
 
 // button要素を使わないで定義したか
 // positionが使えるか
-.bl-cardItem-header-btn {
+.bl-frontCard-header-btn {
   cursor: pointer;
   position: absolute;
   top: 6px;
