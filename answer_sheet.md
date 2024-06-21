@@ -2,6 +2,8 @@
 
 ## 出題方法
 
+https://docs.google.com/spreadsheets/d/1fKFTSODr0PEVAS7LtvR-86UyQKhB7goq40d77PFk4E8/edit?gid=1475970797#gid=1475970797
+
 Lv.3
 コンポーネント作成は仕様を定義し、それをもとに実装してもらう。
 実装にも条件を付け、できるだけ抜け道はなくす。
@@ -49,31 +51,31 @@ Drag&Drop（VueDraggle使用）
 
 Lv.2
 mouseイベント
--> 
+->
 
 v-for
 -> （key設定、v-ifと別階層になること）
 
 v-if
--> 
+->
 
 v-show
--> 
+->
 
 template
--> 
+->
 
 ref
--> 
+->
 
 computed
--> 
+->
 
 watch
--> 
+->
 
 props/emit
--> 
+->
 
 Lv.1
 なし
@@ -82,23 +84,23 @@ Lv.1
 
 Lv.3
 継承（extends）
--> 
+->
 
 Omit
--> 
+->
 
 readonly
--> 
+->
 
 enum的な定義
--> 
+->
 
 Lv.2
 型定義（type/interface）
--> 
+->
 
 パイプ（or）
--> 
+->
 
 Lv.1
 なし
@@ -107,88 +109,88 @@ Lv.1
 
 Lv.3
 vanillaのJSでDOM生成
--> 
+->
 
 Drag&Drop（VueDraggle使用）
--> 
+->
 
 グラフ（Highcharts使用）
--> 
+->
 
 flat/flatMap
--> 
+->
 
 リファクタリング
--> 
+->
 
 optional
--> 
+->
 
 return節
--> 
+->
 
 Lv.2
 mouseイベント
--> 
+->
 
 イベント伝播
--> 
+->
 
 設計
--> 
+->
 
 JSDoc
 -> JSDoc/TSDocが枯れているか(ref/computed/functionなど)
 
 Lv.1
 型（String/Numberなど）
--> 
+->
 
 Object
--> 
+->
 
 配列
--> 
+->
 
 for/forEach
--> 
+->
 
 関数の作成
--> 
+->
 
 不等号
--> 
+->
 
 if
--> 
+->
 
 ### HTML/CSS
 
 Lv.3
 SCSS変数
--> 
+->
 
 position sticky
--> 
+->
 
 Lv.2
 CSS設計
--> 
+->
 
 SCSS記法の基本
--> 
+->
 
 影響範囲の意識
--> 
+->
 
 モディファイアの使用
--> 
+->
 
 CSS変数
--> 
+->
 
 z-index
--> 
+->
 
 Lv.1
 ・pug
