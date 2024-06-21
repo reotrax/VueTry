@@ -4,14 +4,13 @@
   .bl-versatile-area
     input()
   .bl-cardList(@scroll="onScrollList")
+    //- 配列cardListを使用してFontCardにを並べなさい。
     template(v-for="(item, index) of cardList")
-      //- v-forとv-ifが分かれている
-      //- keyが設定されている
       font-card(
         v-if="true"
         :key="`card-${index}`"
         :item="item"
-        :class="item.isSelected ? 'is-selected' : ''"
+        :class="selectedClass(item)"
         @click="onClickCard(item)"
       )
 
@@ -35,6 +34,15 @@ export default defineComponent({
   },
 
   setup() {
+    /**
+     *
+     * @param item カード情報
+     * @returns string 選択クラス
+     */
+    function selectedClass(item: CardItem) {
+      return item.isSelected ? "is-selected" : "";
+    }
+
     function onScrollList(event: Event) {
       const el = event.target;
       const rect = (el as HTMLElement)?.getBoundingClientRect();
@@ -50,6 +58,7 @@ export default defineComponent({
     }
 
     return {
+      selectedClass,
       onScrollList,
       onClickCard,
     };

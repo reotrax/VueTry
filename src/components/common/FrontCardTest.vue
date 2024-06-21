@@ -4,19 +4,14 @@
   @click="$emit('click')"
 )
   .bl-frontCard-header
-    //- mouseイベントが使えるか
-    .bl-frontCard-header-label(
-      @mouseenter="$emit('mouseenter')"
-      @mouseleave="$emit('mouseleave')"
-    )
-      | {{ item.title }}
-    .bl-tooltip(v-if="item.isShowPopover")
-      | {{ item.title }}
+    //- カード名をマウスオーバーしたイベントを取得して、ツールチップの表示/非表示を実現させなさい。
+    .bl-frontCard-header-label
+      //- カード名を表示させなさい。
+    .bl-tooltip
+      //- ツールチップにはカード名を表示させること（改行禁止）
     //- 修飾子を使って伝播を止められるか
-    //- form要素を適切に使えるか
-    button.bl-frontCard-header-btn(
-      @click.stop="onClickButton"
-    )
+    //- ボタンをクリックしたらカードの選択状態を変更できないようにしなさい。再度クリックでこの機能を解除できること。
+    .bl-frontCard-header-btn
       | hold
   .bl-frontCard-body
     .bl-frontCard-body-inner

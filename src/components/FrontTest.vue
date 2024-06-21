@@ -215,10 +215,16 @@ $font-size: 14px;
 }
 
 .bl-frontCard-body {
-  text-align: left;
   padding: 10px;
   flex: 1;
   border-radius: 0 0 8px 8px;
+}
+
+.bl-frontCard-body-inner {
+  text-align: left;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 //- 文字数が多くてもずれないか
