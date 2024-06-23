@@ -15,7 +15,8 @@
 import { defineComponent, ref, computed } from "@vue/composition-api";
 import FontCard, { CardItem } from "@/components/common/FrontCard.vue";
 import TestLevel3 from "@/components/common/TestLevel3.vue";
-import TestLevel2 from "@/components/common/TestLevel2.vue";
+// import TestLevel2 from "@/components/common/TestLevel2.vue";
+import TestLevel2 from "@/components/common/FrontListLevel2.vue";
 import TestLevel1 from "@/components/common/TestLevel1.vue";
 
 export default defineComponent({
