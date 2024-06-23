@@ -8,6 +8,7 @@
     //- 入力したら対象項目のdescriptionが同じ値になるように実装しなさい。
     input(v-model="selectedItem.description" @click.stop="")
     button(@click.stop="onClickBtnAdd") 追加
+    //- ボタンでもラジオボタンでも可
     select(v-model="selectedAuthority")
       option() admin
       option() guest
@@ -103,7 +104,7 @@ export default defineComponent({
     );
 
     // computedなら● / watchは▲ - 項目の数を表示する機能を実装しなさい。
-    const listLength = computed(() => list.value.length);
+    const listLength = computed(() => authorityList.value.length);
 
     const selectedAuthority = ref("admin");
 
@@ -113,14 +114,9 @@ export default defineComponent({
     // v-if or filter（どちらを使用するかは発想の問題で、実装できる人はどっちも理解できるはず）
     // ボタン毎の権限を指定して項目の表示をコントロールできること。
     // 非表示になったら要素がDOMツリーから消えていること。
-    function authorityFilter() {
-      list.value.filter((itm) => itm.authority);
-    }
 
     // map
     // 権限によって文言を変更しなさい。
-
-    // 3段階の権限毎にリストの機能を実装しなさい。
 
     // find
     // 指定した情報にいっちする項目の情報をfindで取得して表示させなさい。
@@ -209,7 +205,7 @@ export default defineComponent({
   padding: 20px;
   border: 1px solid;
   margin: 0 auto;
-  width: 500px;
+  width: 400px;
   height: 300px;
   overflow: hidden scroll;
 }

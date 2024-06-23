@@ -4,8 +4,8 @@
   @click.stop="$emit('click')"
 )
   .frontItem-inner
-    //- .frontItem-title
-      | {{  item.name }}
+    .frontItem-title
+      | {{  item.id }}
     .frontItem-description
       | {{  item.description }}
 
@@ -53,9 +53,9 @@ export default defineComponent({
 .frontItem {
   border: 1px solid;
   // border-radius: 10px;
-  width: 300px;
-  min-height: 30px;
-  max-height: 30px;
+  width: 100%;
+  // min-height: 30px;
+  // max-height: 30px;
   padding: 10px;
   cursor: pointer;
 

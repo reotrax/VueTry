@@ -165,6 +165,10 @@ export default defineComponent({
 // importantの禁止
 // クラス以外の使用禁止
 
+.bl-cardList {
+  margin: 0 auto;
+}
+
 .bl-frontCard-header-label {
   overflow: visible;
   &:hover {
