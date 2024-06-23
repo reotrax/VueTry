@@ -17,7 +17,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from "@vue/composition-api";
-import FontCard, { CardItem } from "@/components/common/FrontCard.vue";
+import FontCard, { CardItem } from "@/components/common/FrontCardLevel2.vue";
 
 export default defineComponent({
   name: "TestLevel2",
