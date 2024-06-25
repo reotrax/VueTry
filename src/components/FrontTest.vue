@@ -1,9 +1,11 @@
 <template lang="pug">
 .un-helloWorld
   .un-helloWorld-main
-    button(@click="selectedTestLevel = 3") 優
-    button(@click="selectedTestLevel = 2") 良
-    button(@click="selectedTestLevel = 1") 可
+    .un-helloWorld-btns
+      button(@click="selectedTestLevel = 3") 優
+      button(@click="selectedTestLevel = 2") 良
+      button(@click="selectedTestLevel = 1") 可
+      button(@click="selectedTestLevel = 11") 可(回答)
 
     component(
       :is="selectedTestComponent"
@@ -17,7 +19,8 @@ import FontCard, { CardItem } from "@/components/common/FrontCard.vue";
 import TestLevel3 from "@/components/common/TestLevel3.vue";
 // import TestLevel2 from "@/components/common/TestLevel2.vue";
 import TestLevel2 from "@/components/common/FrontListLevel2.vue";
-import TestLevel1 from "@/components/common/TestLevel1.vue";
+import TestLevel1 from "@/components/common/FrontLevel1GapFill.vue";
+import TestLevel1Answer from "@/components/common/FrontLevel1GapFillAnswer.vue";
 
 export default defineComponent({
   name: "HelloWorld",
@@ -27,6 +30,7 @@ export default defineComponent({
     TestLevel3,
     TestLevel2,
     TestLevel1,
+    TestLevel1Answer,
   },
 
   props: {
@@ -114,6 +118,7 @@ export default defineComponent({
     /** コンポーネント名 */
     const TEST_NAME: { [key: number]: string } = {
       1: "TestLevel1",
+      11: "TestLevel1Answer",
       2: "TestLevel2",
       3: "TestLevel3",
     };
@@ -148,129 +153,12 @@ $font-size: 14px;
 .un-helloWorld-main {
   overflow: hidden scroll;
 }
-</style>
 
-<style lang="scss">
-// SASS変数を適切に使用しているか
-$card-width: 200px;
-$card-height: 160px;
-$card-margin: 20px;
-$font-size: 14px;
-
-* {
-  box-sizing: border-box;
-}
-
-//- ルール通りの命名規則になっているか（ケバブケース）
-.bl-cardList {
-  // flexが使えるか
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  // デザイン通りか
-  border: 2px solid #aaa;
-  // 余白は適切か
-  gap: $card-margin;
-  padding: $card-margin 4px $card-margin $card-margin;
-  // calcが使えるか
-  width: calc(
-    (#{$card-width} * 3) + (#{$card-margin} * 2) + (#{$card-margin} * 2) + 4px
-  );
-  // 内容物に応じた可変サイズが設定できるか
-  max-height: 240px;
-  // スクロールさせられるか
-  overflow: hidden scroll;
-}
-
-// importantを使いこなせるか
-.help {
-  padding: 0 !important;
-}
-
-.bl-frontCard {
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  width: $card-width;
-  height: $card-height;
-  border-radius: 10px;
-  border: 2px solid gray;
-  background: white;
-  &.is-selected {
-    border-color: red;
-    .bl-frontCard-header,
-    .bl-frontCard-body {
-      background-color: #ffcdcd;
-    }
-  }
-}
-
-.bl-frontCard-header {
-  position: relative;
+.un-helloWorld-btns {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 36px;
-  border-bottom: 1px solid #00000033;
-  border-radius: 8px 8px 0 0;
-}
-
-.bl-frontCard-body {
-  padding: 10px;
-  flex: 1;
-  border-radius: 0 0 8px 8px;
-}
-
-.bl-frontCard-body-inner {
-  text-align: left;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-//- 文字数が多くてもずれないか
-.bl-frontCard-header-label {
-  position: relative;
-  font-size: $font-size;
-  max-width: 90px;
-  text-wrap: nowrap;
-  overflow: hidden;
-}
-
-.bl-tooltip {
-  position: absolute;
-  top: 6px;
-  left: 50%;
-  transform: translate(-50%, -100%);
-  background-color: white;
-  pointer-events: none;
-  border-radius: 10px;
-  border: 2px solid;
-  width: fit-content;
-  text-wrap: nowrap;
-}
-
-// button要素を使わないで定義したか
-// positionが使えるか
-.bl-frontCard-header-btn {
-  cursor: pointer;
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  border-radius: 12px;
-  border: 2px solid #00000033;
-  // buttonタグのスタイルを打ち消せるか
-  padding: 0;
-  text-align: center;
-  width: 42px;
-  height: 24px;
-  // 影を使えるか（見た目はなんとなくでOK）
-  // box-shadow: 0 0 6px -1px #00000055;
-  background: lightblue;
-}
-
-// importantを使いこなせるか
-.help {
-  padding: 0 !important;
+  gap: 10px;
 }
 </style>
+
+<style lang="scss"></style>

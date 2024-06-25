@@ -1,10 +1,2 @@
-html {
-  overflow: hidden;
-}
-
-html, body, #app {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
+@import "@/assets/stylesheets/base.scss";
+@import "@/assets/stylesheets/level1.scss";
