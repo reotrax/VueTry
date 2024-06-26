@@ -1,30 +1,32 @@
 <template lang="pug">
 //- 1. 'app' を v-bind せずに直接 id="app" と書くべきです。
-//- 21. ファイル名/クラス名/IDは揃えた方が良いのでは
-div#app(v-bind:id="'review'")
+.test-review(v-bind:id="'test-review'")
   //- 20. buttonタグを使って可読性を上げる
-  div.button(@click="onClick") Clickable
+  .basic-btn(@click="onClick") Clickable
   //- 22. クラス名は複数単語で命名
-  div.information
-    input(v-model="inputValue" @keyup.enter="onEnterSearch" placeholder="検索")
-    div.searched-item
+  .information-area
+    input.information-input(v-model="inputValue" @keyup.enter="onEnterSearch" placeholder="検索")
+    .searched-item
       | 検索結果: {{ searchedItem }}
 
-  //- 2. 複数の属性がある場合は改行して書くべきです。
   //- 5. v-forとv-ifが別の要素で使用してください
-  div.item(v-for="item, i in items" v-if="showItems" @click="selectItem(i)")
-    //- 9. keyが未設定なので選択状態がバグりませんか
+  //- 9. keyが未設定なので選択状態がバグりませんか
+  .item-list(
+    v-for="item, i in items"
+    v-if="showItems"
+    @click="selectItem(i)"
+  )
     //- 23. 動的に付与するクラスなのでis-selectedとしてください
-    div.item-inner(:class="{ selected: selectedIndex === i }")
+    .item-list-inner(:class="{ selected: selectedIndex === i }")
       span {{ item.name }}
-      div.button(@click.stop="addItem(i)") Add
-      div.button(@click.stop="removeItem(i)") Remove
+      .basic-btn(@click.stop="addItem(i)") Add
+      .basic-btn(@click.stop="removeItem(i)") Remove
 
-  .button(@click="handleClick('Click')")
+  .basic-btn(@click="handleClick('Click')")
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from "@vue/composition-api";
+import { defineComponent, ref, computed } from "@vue/composition-api";
 
 type PrimaryKey = {
   id: number;
@@ -37,9 +39,10 @@ type Items = {
 };
 
 export default defineComponent({
-  name: "CodeReview",
+  name: "TestReview",
 
   props: {
+    /** 変更されない名称 */
     propName: {
       type: String,
       // 8. スペルミスです。required にしてください。
@@ -50,8 +53,8 @@ export default defineComponent({
   setup(props, { emit }) {
     // 7. リアクティブにする必要はなさそうです
     // 14. 定数名が具体的でない
-    //
-    const count = ref<number>(0);
+    /** ボタンのクリック数 */
+    const btnClickCount = ref<number>(0);
 
     /** inputの値 */
     const inputValue = ref("");
@@ -63,38 +66,34 @@ export default defineComponent({
     /** 選択したindex */
     const selectedIndex = ref<any>();
 
-    /** itemリスト */
-    const items = ref<(Items & PrimaryKey)[]>([]);
+    /** itemsのidにするためのカウント */
+    let itemIdCount = 0;
+
+    /** 表示するitemリスト */
+    const items = ref<(Items & PrimaryKey)[]>([
+      { id: 0, name: "john" },
+      { id: 1, name: "jane" },
+    ]);
 
     /** itemリストの表示 */
-    const showItems = ref<boolean>(true);
-
-    // 6: watchでなくcomputedにするべきです。
-    watch(
-      () => props.propName,
-      (newVal) => {
-        // 30. ガード節にできるのでは？
-        // 17.switchで良いのでは？
-        if (count.value != null && newVal === "review") {
-          items.value = [
-            { id: 0, name: "john" },
-            { id: 1, name: "jane" },
-          ];
-        } else if (count.value != null && newVal === "patternB") {
-          items.value = [{ id: 0, name: "B" }];
-        } else if (count.value != null && newVal === "patternC") {
-          items.value = [];
-        }
-      },
-      // ??. immediate を設定しないと何も表示されないのでは？
-      { immediate: true }
-    );
+    const showItems = computed<boolean>(() => {
+      switch (props?.propName) {
+        case "review":
+          return true;
+        case "patternB":
+          return true;
+        case "patternC":
+          return false;
+        default:
+          return false;
+      }
+    });
 
     /**
      * カウンターを更新
      */
     const handleClick = () => {
-      count.value++;
+      btnClickCount.value++;
     };
 
     /**
@@ -122,24 +121,21 @@ export default defineComponent({
     /**
      * クリックイベント
      */
-    function onClick(): any {
-      // 3. emitのイベント名の最初に 'on' は不要です。
-      emit("on-click");
+    function onClick() {
+      emit("click");
     }
 
-    // 15. 関数の引数に存在しない引数がJSDocに書かれているので削除
     /**
      * item追加
      * @param index index
-     * @param key key
      */
     function addItem(index: number) {
       const newItem = {
-        // 19. idやnameが重複しますが大丈夫でしょうか？
-        id: index,
-        name: `Item ${index}`,
+        id: itemIdCount,
+        name: `Item ${itemIdCount}`,
       };
       items.value.splice(index + 1, 0, newItem);
+      itemIdCount++;
     }
 
     /**
@@ -151,7 +147,7 @@ export default defineComponent({
     }
 
     return {
-      count,
+      btnClickCount,
       inputValue,
       searchedItem,
       selectedIndex,
@@ -170,9 +166,10 @@ export default defineComponent({
 
 <!-- 4. scoped を追加してください。 -->
 <style lang="scss">
-/* 26. クラス以外は詳細度が高くなるので禁止です */
+$font-size: 12px;
+
 /* 27. 影響範囲を考慮していますか？ */
-input {
+.information-input {
   border-radius: 10px;
   border: 2px solid blue;
   /* 25. important必要ですか？ */
@@ -181,30 +178,30 @@ input {
 
 .searched-item {
   height: 15px;
-  /* 24. 汎用的な値はSCSS変数にしてください */
-  font-size: 12px;
+  font-size: $font-size;
   margin: 10px;
 }
 
-.button {
+.basic-btn {
   width: 80px;
   border: 1px solid;
   cursor: pointer;
 }
 
-.item {
+.item-list {
   margin: 0;
   padding: 0;
   border: 1px solid;
 }
 
-.item-inner {
+.item-list-inner {
   display: flex;
   justify-content: space-around;
   align-items: center;
   padding: 10px;
 
   /* 27. 影響範囲を考慮していますか？ */
+  /* 23. 動的なクラスはis-xxxにしてください */
   .selected {
     background-color: rgb(253, 179, 183);
   }

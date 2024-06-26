@@ -3,10 +3,15 @@
   .un-helloWorld-main
     .un-helloWorld-btns
       button(@click="selectedTestLevel = 3") 優
-      button(@click="selectedTestLevel = 31") 優:レビュー
+      button(@click="selectedTestLevel = 31") 優:レビュー1
+      button(@click="selectedTestLevel = 32") 優:レビュー2
+      button(@click="selectedTestLevel = 33") 優:レビュー3
       button(@click="selectedTestLevel = 2") 良
       button(@click="selectedTestLevel = 1") 可
       button(@click="selectedTestLevel = 11") 可:回答
+
+    p
+      | {{ selectedTestComponent }}
 
     component(
       :is="selectedTestComponent"
@@ -19,7 +24,9 @@
 import { defineComponent, ref, computed } from "@vue/composition-api";
 import FontCard, { CardItem } from "@/components/common/FrontCard.vue";
 import TestLevel3 from "@/components/common/TestLevel3.vue";
-import TestLevel3ReviewFromChatgpt from "@/components/common/TestLevel3ReviewFromChatgpt.vue";
+import TestLevel3Review1 from "@/components/common/TestLevel3Review1.vue";
+import TestLevel3Review2 from "@/components/common/TestLevel3Review2.vue";
+import TestLevel3Review3 from "@/components/common/TestLevel3Review3.vue";
 // import TestLevel2 from "@/components/common/TestLevel2.vue";
 import TestLevel2 from "@/components/common/FrontListLevel2.vue";
 import TestLevel1 from "@/components/common/FrontLevel1GapFill.vue";
@@ -31,7 +38,9 @@ export default defineComponent({
   components: {
     FontCard,
     TestLevel3,
-    TestLevel3ReviewFromChatgpt,
+    TestLevel3Review1,
+    TestLevel3Review2,
+    TestLevel3Review3,
     TestLevel2,
     TestLevel1,
     TestLevel1Answer,
@@ -125,7 +134,9 @@ export default defineComponent({
       11: "TestLevel1Answer",
       2: "TestLevel2",
       3: "TestLevel3",
-      31: "TestLevel3ReviewFromChatgpt",
+      31: "TestLevel3Review1",
+      32: "TestLevel3Review2",
+      33: "TestLevel3Review3",
     };
 
     /** 選択コンポーネント番号 */
